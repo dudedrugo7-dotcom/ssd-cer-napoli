@@ -3144,8 +3144,12 @@ function buildSchedaPaesc(cabId){
   // Municipalità attraversate dall'ambito: il raccordo con la governance urbana
   const mc = {};
   sez.forEach(s=>{ if(s.mun) mc[s.mun] = (mc[s.mun]||0)+1; });
+  // si elencano le sole Municipalita con una quota apprezzabile: sotto lo 0,5%
+  // l'arrotondamento le mostrerebbe a 0% e la riga diventerebbe fuorviante
   const munTxt = Object.entries(mc).sort((a,b)=>b[1]-a[1])
-    .map(([m,n])=>`<strong>${m}</strong> ${munNome(m).split(' · ')[0]} (${(n/sez.length*100).toFixed(0)}%)`).join(' · ') || '—';
+    .map(([m,n])=>[m, n/sez.length*100])
+    .filter(([,p])=>p>=0.5)
+    .map(([m,p])=>`<strong>${m}</strong> ${munNome(m).split(' · ')[0]} (${p.toFixed(0)}%)`).join(' · ') || '—';
   const row = (l,v) => `<tr><th style="text-align:left;padding:5px 10px 5px 0;font-weight:600;color:#444;width:38%">${l}</th><td style="padding:5px 0">${v}</td></tr>`;
 
   const el = document.getElementById('scheda-body');
