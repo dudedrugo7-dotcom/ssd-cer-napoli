@@ -44,11 +44,16 @@ def json_script(nome, path):
 
 
 def corpo(build, dati_inclusi, leaflet_tag):
+    import re
     pagina = leggi(SRC / 'page.html')
     if build != 'web':
         # il collegamento alla versione offline serve solo sul sito: altrove si toglie del tutto
-        import re
         pagina = re.sub(r'\s*<a class="btn-head" id="lnk-offline".*?</a>', '', pagina, flags=re.S)
+    else:
+        # sul sito il messaggio per chi non ha JavaScript non parla di file da salvare
+        pagina = re.sub(r'<div class="nojs">.*?</div>',
+                        '<div class="nojs"><h1>SSD CER Napoli</h1><p>Lo strumento ha bisogno di JavaScript: '
+                        'attivalo nelle impostazioni del browser e ricarica la pagina.</p></div>', pagina, flags=re.S)
     pezzi = [pagina]
     if dati_inclusi:
         pezzi.append(json_script('dati', HERE / 'dati.json'))
@@ -64,8 +69,14 @@ def stile(leaflet_css=True):
     return '<style>\n' + css + '\n</style>'
 
 
+# prima riga visibile se il file viene aperto per errore con un editor di testo
+AVVISO = ('<!-- SSD CER Napoli: strumento interattivo. Per usarlo apri questo file con un browser '
+          '(Chrome, Edge, Firefox o Safari), non con un editor di testo. '
+          'Versione online: https://dudedrugo7-dotcom.github.io/ssd-cer-napoli/ -->\n')
+
+
 def documento(build, dati_inclusi, leaflet_tag):
-    return ('<!DOCTYPE html>\n<html lang="it">\n<head>\n<meta charset="UTF-8">\n'
+    return ('<!DOCTYPE html>\n' + AVVISO + '<html lang="it">\n<head>\n<meta charset="UTF-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
             f'<title>{TITLE}</title>\n<meta name="description" content="{DESCR}">\n'
             f'{stile()}\n</head>\n<body>\n'

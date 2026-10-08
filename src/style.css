@@ -416,6 +416,19 @@ dialog::backdrop{background:rgba(12,22,32,.55)}
 .foglio .f-nota{font-size:11.5px;color:#566a7e;margin-top:6px}
 .foglio p{margin:0 0 8px}
 
+/* schede d'azione PAESC: una per cabina */
+.griglia-paesc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.voce-paesc .dove{white-space:normal}
+.voce-paesc .apri{grid-column:2/4;display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:700;color:var(--accent)}
+.voce-paesc .apri svg{width:15px;height:15px}
+.titolo-cab .btn{margin-left:auto}
+
+/* messaggio per chi apre il file senza JavaScript (anteprime della posta, telefoni) */
+.nojs{max-width:720px;margin:24px auto;padding:20px 22px;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-l);display:flex;flex-direction:column;gap:10px}
+.nojs h1{font-size:var(--fs-xl)}
+.nojs ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+@media (max-width:760px){.nojs{margin:16px}}
+
 /* ---------------------------------------------------------------- piè di pagina */
 .piede{max-width:1480px;margin:0 auto;padding-inline:16px;padding-block:8px 32px;color:var(--ink-3);font-size:var(--fs-s)}
 .piede p + p{margin-top:4px}

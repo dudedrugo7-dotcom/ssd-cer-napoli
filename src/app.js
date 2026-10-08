@@ -282,7 +282,23 @@ function renderNapoli(){
   renderTabCabine();
   renderNorma();
   renderScenari();
+  renderPaesc();
   renderMun();
+}
+
+function renderPaesc(){
+  const voci = R.ord.map(j => {
+    const x = R.cab[j], c = D.cab[j];
+    return `<li><button type="button" class="voce-cab voce-paesc" data-scheda="${c.id}">
+      ${pillClasse(x.cl)}<span class="cod">${c.id}</span><span class="vv">${n0(x.serv)} <small>vuln. raggiungibili</small></span>
+      <span class="dove">Configurazione minima: ${esc(configTesto(x))}</span>
+      <span class="apri"><svg aria-hidden="true"><use href="#i-doc"/></svg>Apri la scheda</span></button></li>`;
+  }).join('');
+  $('#blocco-paesc').innerHTML = `
+    <div class="blocco-testa"><div><p class="occhiello">Dall'esito al piano</p>
+      <h2 id="h-paesc">Schede d'azione per il PAESC</h2></div></div>
+    <p class="lead">Per ogni cabina lo strumento compila una scheda d'azione da inserire nel Piano d'Azione per l'Energia Sostenibile e il Clima del Comune di Napoli: obiettivo, configurazione, siti per l'installazione, risultati attesi, soggetti responsabili, tempi e indicatori di monitoraggio. La scheda usa i valori del pannello «Parametri variabili»${BUILD === 'artifact' ? '' : ' e si può stampare o salvare in PDF'}.</p>
+    <ul class="lista-cab griglia-paesc" style="margin-top:14px">${voci}</ul>`;
 }
 
 function kpiVuln(popV, nV, popTot, cons){
@@ -731,6 +747,7 @@ function renderGuida(focus){
         <li><strong>${n0(c.n[3])} sezioni</strong> dove offerta e domanda coincidono, con ${n0(c.pV[3])} vulnerabili</li>
         <li><strong>${n0(c.n[2])} sezioni</strong> a sola domanda, con ${n0(c.pV[2])} vulnerabili da servire con l'energia prodotta altrove nella cabina</li>
         <li><strong>${n0(R.tot.serv)} vulnerabili</strong> raggiungibili con ${esc(attiviTesto())}</li>
+        <li>Per ogni cabina c'è una <a href="#h-paesc">scheda d'azione per il PAESC</a>, pronta da allegare al piano</li>
       </ul>`;
     comandi = `<button type="button" class="btn" data-tour="indietro"><svg aria-hidden="true"><use href="#i-back"/></svg>Indietro</button>
       <button type="button" class="btn" data-tour="chiudi">Chiudi il percorso</button>
@@ -760,7 +777,8 @@ function renderCabina(){
   document.title = c.id + ' · SSD CER Napoli';
   const munTxt = c.mun.map(([m, q]) => `${munBreve(m)} (${Math.round(q)}%)`).join('; ');
   $('#testa-cabina').innerHTML = `<p class="occhiello">Cabina primaria · perimetro di condivisione dell'energia</p>
-    <div class="titolo-cab"><h1 id="h-cab" tabindex="-1">${c.id}</h1>${pillClasse(x.cl, true)}</div>
+    <div class="titolo-cab"><h1 id="h-cab" tabindex="-1">${c.id}</h1>${pillClasse(x.cl, true)}
+      <button type="button" class="btn" data-scheda="${c.id}"><svg aria-hidden="true"><use href="#i-doc"/></svg>Scheda d'azione PAESC</button></div>
     <p class="dove-cab">${esc(munTxt)}</p>
     ${DESCR_TESI[c.id] ? `<p class="nota">${DESCR_TESI[c.id]}</p>` : ''}
     <p class="dati-sintetici"><span><strong>${n0(c.pop)}</strong> residenti</span><span><strong>${NF2.format(c.area)}</strong> km²</span><span><strong>${n0(c.nsez)}</strong> sezioni censuarie, ${n0(c.nab)} abitate</span><span>${R.ord.indexOf(j) + 1}ª per residenti vulnerabili</span></p>
