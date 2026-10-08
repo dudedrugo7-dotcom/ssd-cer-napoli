@@ -26,6 +26,8 @@ def font_face():
         regole.append("@font-face{font-family:'Titillium Web';font-style:normal;font-weight:%d;font-display:swap;"
                       "src:url(data:font/woff2;base64,%s) format('woff2')}" % (peso, b))
     return '\n'.join(regole)
+# indirizzo della versione online della v9 (il link citato nella tesi resta alla v8)
+ONLINE = 'https://dudedrugo7-dotcom.github.io/ssd-cer-napoli/v9/'
 LEAFLET_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js'
 # icona del selettore di sfondo: la CSS di Leaflet punta a un'immagine che qui non c'è
 LAYERS_ICON = ('.leaflet-control-layers-toggle{background-image:url("data:image/svg+xml,'
@@ -46,6 +48,7 @@ def json_script(nome, path):
 def corpo(build, dati_inclusi, leaflet_tag):
     import re
     pagina = leggi(SRC / 'page.html')
+    pagina = pagina.replace('{{ONLINE}}', ONLINE).replace('{{ONLINE_TESTO}}', ONLINE.split('://')[1].rstrip('/'))
     if build != 'web':
         # il collegamento alla versione offline serve solo sul sito: altrove si toglie del tutto
         pagina = re.sub(r'\s*<a class="btn-head" id="lnk-offline".*?</a>', '', pagina, flags=re.S)
@@ -72,7 +75,7 @@ def stile(leaflet_css=True):
 # prima riga visibile se il file viene aperto per errore con un editor di testo
 AVVISO = ('<!-- SSD CER Napoli: strumento interattivo. Per usarlo apri questo file con un browser '
           '(Chrome, Edge, Firefox o Safari), non con un editor di testo. '
-          'Versione online: https://dudedrugo7-dotcom.github.io/ssd-cer-napoli/ -->\n')
+          f'Versione online: {ONLINE} -->\n')
 
 
 def documento(build, dati_inclusi, leaflet_tag):
