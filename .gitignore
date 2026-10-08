@@ -3,14 +3,15 @@
 *.sr.lock
 *.lock
 
-# --- build generati -----------------------------------------------------
-# si rigenerano con: python build_standalone.py
+# --- anteprima per claude.ai, si rigenera con: python build.py -------------
+dist/
+
+# --- vecchi build v8 -----------------------------------------------------
 SSD-v8-Napoli-standalone.html
 SSD-v8-Napoli-LEGGERO.html
 artifact-ssd.html
 
 # --- copie di lavoro del dataset ----------------------------------------
-# la versione buona e dataset.json; queste sono backup e versioni non ottimizzate
 dataset.backup.json
 dataset.full.json
 dataset.prima_aree.json
@@ -20,6 +21,7 @@ Thumbs.db
 desktop.ini
 .DS_Store
 ~$*
+__pycache__/
 
 # utilita personale, non fa parte dello strumento
 esporta_conversazione.py

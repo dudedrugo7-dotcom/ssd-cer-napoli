@@ -5,7 +5,7 @@ REM  Serve perche' su questo computer i file .html sono associati a
 REM  un visualizzatore di codice, che ne mostra il sorgente invece
 REM  di eseguirli. Qui il browser viene invocato esplicitamente.
 REM ---------------------------------------------------------------
-set "SSD=%~dp0SSD-v8-Napoli-standalone.html"
+set "SSD=%~dp0SSD-CER-Napoli.html"
 
 if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
     start "" "%ProgramFiles%\Google\Chrome\Application\chrome.exe" "%SSD%"
