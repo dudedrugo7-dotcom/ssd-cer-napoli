@@ -44,7 +44,12 @@ def json_script(nome, path):
 
 
 def corpo(build, dati_inclusi, leaflet_tag):
-    pezzi = [leggi(SRC / 'page.html')]
+    pagina = leggi(SRC / 'page.html')
+    if build != 'web':
+        # il collegamento alla versione offline serve solo sul sito: altrove si toglie del tutto
+        import re
+        pagina = re.sub(r'\s*<a class="btn-head" id="lnk-offline".*?</a>', '', pagina, flags=re.S)
+    pezzi = [pagina]
     if dati_inclusi:
         pezzi.append(json_script('dati', HERE / 'dati.json'))
         pezzi.append(json_script('footprints', HERE / 'footprints.json'))
