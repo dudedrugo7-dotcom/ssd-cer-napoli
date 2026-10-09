@@ -1,5 +1,8 @@
 # SSD CER Napoli
 
+> **Versione corrente: v9.** L'indirizzo https://dudedrugo7-dotcom.github.io/ssd-cer-napoli/ apre la v9
+> (cartella `v9/`, sorgente nel ramo `v9-accessibile`). La versione 8 resta consultabile in `v8.html`.
+
 Strumento di supporto alla decisione per la prioritizzazione delle comunità energetiche
 rinnovabili nel Comune di Napoli.
 
